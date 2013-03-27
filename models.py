@@ -27,8 +27,8 @@ class drug(db.Model):
         tempList = []
         for (i, temp) in enumerate(data['objects']):
             tempList.append({})
-            tempList[i]['code'] = temp['code']
-            tempList[i]["state"] = temp['state']
+            tempList[i]['DRUGid'] = temp.DRUGid
+            tempList[i]['name'] = temp.name
         data['objects'] = tempList
         return data
 
@@ -52,14 +52,8 @@ class fixedrecipe(db.Model):
         tempList = []
         for (i, temp) in enumerate(data['object']):
             tempList.append({})
-            tempList[i]["code"] = temp.code
+            tempList[i]["FREPid"] = temp.FREPid
             tempList[i]["name"] = temp.name
-            tempList[i]["effect"] = temp.effect
-            tempList[i]["py"] = temp.py
-            tempList[i]["wb"] = temp.wb
-            tempList[i]["isClassical"] = temp.isClassical
-            tempList[i]["SPETid"] = temp.SPETid
-            tempList[i]["state"] = temp.state
         data['object'] = tempList
         return data
 
@@ -76,3 +70,13 @@ class fixedrecipeItem(db.Model):
     fixedrecipe = db.relationship('fixedrecipe', backref=db.backref('fixedrecipeItems', cascade='all, delete-orphan'))
     #primary key (FRITid)
 
+    @classmethod
+    def get_all(self, data):
+        tempList = []
+        for (i, temp) in enumerate(data['object']):
+            tempList.append({})
+            tempList[i]["FRITid"] = temp.FRITid
+            tempList[i]["FREPid"] = temp.FREPid
+            tempList[i]["DRUGid"] = temp.DRUGid
+        data['object'] = tempList
+        return data
