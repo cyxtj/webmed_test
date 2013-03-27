@@ -40,8 +40,7 @@ class TestFixedrecipeItem(unittest.TestCase):
     def tearDown(self):
         db.drop_all()
 
-
-    def test_fixedrecipe_get(self):
+    def test_fixedrecipe_get_all(self):
         r = self.client.get('/api/fixedrecipe')
         self.assertEqual(json.loads(r.data)['num_results'], 1)
 
@@ -64,9 +63,13 @@ class TestFixedrecipeItem(unittest.TestCase):
         self.assertEqual(json.loads(r.data)['num_results'], 0)
        
 
-    def test_drug_get(self):
+    def test_drug_get_all(self):
         r = self.client.get('/api/drug')
         self.assertEqual(json.loads(r.data)['num_results'], 1)
+
+    def test_drug_get_by_id(self):
+        r = self.client.get('/api/drug/e28b7d9c-e817-47c1-b227-97d8eca021a7')
+        self.assertEqual(json.loads(r.data)['DRUGid'], 'e28b7d9c-e817-47c1-b227-97d8eca021a7')
 
     def test_drug_add(self):
         r = self.client.post('/api/drug',\
@@ -87,7 +90,7 @@ class TestFixedrecipeItem(unittest.TestCase):
         self.assertEqual(json.loads(r.data)['num_results'], 0)
         
 
-    def test_fixedrecipeItem_get(self):
+    def test_fixedrecipeItem_get_all(self):
         r = self.client.get('/api/fixedrecipe_item')
         self.assertEqual(json.loads(r.data)['num_results'], 1)
 

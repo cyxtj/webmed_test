@@ -1,7 +1,8 @@
 #coding=utf-8
-
 from flask.ext.sqlalchemy import SQLAlchemy
-from views import app
+from flask import Flask
+
+app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:levis822@localhost:3306/duobiao'
 db = SQLAlchemy(app)
@@ -27,11 +28,10 @@ class drug(db.Model):
         tempList = []
         for (i, temp) in enumerate(data['objects']):
             tempList.append({})
-            tempList[i]['DRUGid'] = temp.DRUGid
-            tempList[i]['name'] = temp.name
+            tempList[i]['DRUGid'] = temp['DRUGid']
+            tempList[i]['name'] = temp['name']
         data['objects'] = tempList
         return data
-
 
 class fixedrecipe(db.Model):
     FREPid = db.Column(db.String(36), nullable=False, primary_key=True)
@@ -50,10 +50,10 @@ class fixedrecipe(db.Model):
     @classmethod
     def get_all(self, data):
         tempList = []
-        for (i, temp) in enumerate(data['object']):
+        for (i, temp) in enumerate(data['objects']):
             tempList.append({})
-            tempList[i]["FREPid"] = temp.FREPid
-            tempList[i]["name"] = temp.name
+            tempList[i]["FREPid"] = temp['FREPid']
+            tempList[i]["name"] = temp['name']
         data['object'] = tempList
         return data
 
@@ -73,10 +73,10 @@ class fixedrecipeItem(db.Model):
     @classmethod
     def get_all(self, data):
         tempList = []
-        for (i, temp) in enumerate(data['object']):
+        for (i, temp) in enumerate(data['objects']):
             tempList.append({})
-            tempList[i]["FRITid"] = temp.FRITid
-            tempList[i]["FREPid"] = temp.FREPid
-            tempList[i]["DRUGid"] = temp.DRUGid
-        data['object'] = tempList
+            tempList[i]["FRITid"] = temp['FRITid']
+            tempList[i]["FREPid"] = temp['FREPid']
+            tempList[i]["DRUGid"] = temp['DRUGid']
+        data['objects'] = tempList
         return data
